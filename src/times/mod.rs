@@ -1,5 +1,3 @@
-use anyhow::{ Result};
-use chrono::NaiveDateTime;
 use chrono::{  NaiveDate, NaiveTime, TimeZone, Utc };
 use chrono_tz::Tz;
 use crate::astro;
@@ -23,16 +21,16 @@ impl School {
 pub enum Authority {
   MWL,
   ISNA,
-  EGAS,
-  UQUM,
-  UISK,
-  IGUT,
-  SIA
+  Egypt,
+  Makkah,
+  Karachi,
+  Tehran,
+  Jafari
 }
 
 pub enum IshaParam {
-  angle(f64),
-  duration(std::time::Duration)
+  Angle(f64),
+  Duration(std::time::Duration)
 }
 
 impl Authority {
@@ -40,23 +38,37 @@ impl Authority {
     match self {
       Self::MWL => 18_f64,
       Self::ISNA => 15_f64,
-      Self::EGAS => 19.5_f64,
-      Self::UQUM => 18.5_f64,
-      Self::UISK => 18_f64,
-      Self::IGUT => 17.7_f64,
-      Self::SIA => 16_f64
+      Self::Egypt => 19.5_f64,
+      Self::Makkah => 18.5_f64,
+      Self::Karachi => 18_f64,
+      Self::Tehran => 17.7_f64,
+      Self::Jafari => 16_f64
     }
   }
 
   fn isha_param(&self) -> IshaParam {
     match self {
-      Self::MWL => IshaParam::angle(17_f64),
-      Self::ISNA => IshaParam::angle(15_f64),
-      Self::EGAS => IshaParam::angle(17.5_f64),
-      Self::UQUM => IshaParam::duration(std::time::Duration::from_secs(90 * 3600)),
-      Self::UISK => IshaParam::angle(18_f64),
-      Self::IGUT => IshaParam::angle(14_f64),
-      Self::SIA => IshaParam::angle(14_f64)
+      Self::MWL => IshaParam::Angle(17_f64),
+      Self::ISNA => IshaParam::Angle(15_f64),
+      Self::Egypt => IshaParam::Angle(17.5_f64),
+      Self::Makkah => IshaParam::Duration(std::time::Duration::from_secs(90 * 3600)),
+      Self::Karachi => IshaParam::Angle(18_f64),
+      Self::Tehran => IshaParam::Angle(14_f64),
+      Self::Jafari => IshaParam::Angle(14_f64)
+    }
+  }
+
+  // TODO Use this for choosing in the CLI
+  #[allow(dead_code)]
+  fn name(&self) -> &str {
+    match self {
+      Self::MWL => "Muslim World League",
+      Self::ISNA => "Islamic Society of North America",
+      Self::Egypt => "Egyptian General Authority of Survey",
+      Self::Makkah => "Umm al-Qura University, Makkah",
+      Self::Karachi => "University of Islamic Sciences, Karachi",
+      Self::Tehran => "Institute of Geophysics, University of Tehran",
+      Self::Jafari => "Shia Ithna Ashari, Leva Research Institute, Qum"
     }
   }
 }
@@ -178,12 +190,12 @@ impl PrayerTimes {
   pub fn isha(&self) -> NaiveTime {
     let param = self.auth.isha_param();
     return match param {
-      IshaParam::angle(a) => {
+      IshaParam::Angle(a) => {
         let hour = astro::horizon_hour_angle(a, self.jd, self.zenith(), self.lat, astro::HorizonDirection::Sunset);
         let time = datetime::hour2time(hour, true).expect("RangeError @ PrayerTime.isha");
         time
       },
-      IshaParam::duration(d) => {
+      IshaParam::Duration(d) => {
         let maghrib = datetime::time2hour(self.maghrib());
         let sunset = datetime::hour2time(maghrib, true).expect("RangeError @ PrayerTime.isha");
         sunset + d

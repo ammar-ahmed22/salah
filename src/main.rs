@@ -1,4 +1,4 @@
-use anyhow::{ Context, Result };
+use anyhow::Result;
 use chrono::{ NaiveDate, NaiveDateTime, TimeZone, Utc };
 use chrono_tz::Tz; 
 use salah::times::PrayerTimes;

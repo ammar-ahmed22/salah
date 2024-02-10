@@ -1,5 +1,4 @@
-use anyhow::Result;
-use chrono::{ DateTime, TimeZone, Datelike, NaiveDate };
+use chrono::{ Datelike, NaiveDate };
 use crate::math::*;
 
 /// Returns the Julian Date for the given date
