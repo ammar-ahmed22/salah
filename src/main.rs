@@ -28,16 +28,18 @@ async fn main() -> Result<()> {
                 .with_timezone(&timezone)
                 .with_authority(&auth)
                 .with_school(&school);
-            
+
             for timing in &timings {
-                println!("{} {}", timing.to_str(), pt.timing(timing).format(format.as_str()));
+                println!(
+                    "{} {}",
+                    timing.to_str(),
+                    pt.timing(timing).format(format.as_str())
+                );
             }
         }
         cli::ParsedOptions::Timings => cli::display_timings(),
         cli::ParsedOptions::Authority => cli::display_authority(),
-        cli::ParsedOptions::Timezones { query } => {
-            cli::display_timezones(&query);
-        }
+        cli::ParsedOptions::Timezones { query } => cli::display_timezones(&query),
     }
 
     return Ok(());

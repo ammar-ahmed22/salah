@@ -67,9 +67,9 @@ pub enum Commands {
     Authority,
     /// Lists all the available timezones with search functionality
     Timezones {
-      /// Search query to find specific available timezones
-      #[arg(default_value_t=String::new())]
-      query: String
+        /// Search query to find specific available timezones
+        #[arg(default_value_t=String::new())]
+        query: String,
     },
 }
 
@@ -102,7 +102,7 @@ pub struct CommonConfig {
     /// Format string for timings output. See `man strftime` for configuration.
     #[arg(long, default_value_t=String::from("%H:%M:%S"))]
     format: String,
-} 
+}
 
 impl CommonConfig {
     fn parsed_date(&self) -> Result<NaiveDate> {
@@ -156,12 +156,12 @@ pub enum ParsedOptions {
         timings: Vec<types::Timing>,
         auth: types::Authority,
         school: types::School,
-        format: String
+        format: String,
     },
     Timings,
     Authority,
     Timezones {
-      query: String
+        query: String,
     },
 }
 
@@ -274,9 +274,11 @@ pub async fn parse() -> Result<ParsedOptions> {
         }
         Commands::Authority => {
             return Ok(ParsedOptions::Authority);
-        },
+        }
         Commands::Timezones { query } => {
-          return Ok(ParsedOptions::Timezones { query: query.to_owned() });
+            return Ok(ParsedOptions::Timezones {
+                query: query.to_owned(),
+            });
         }
     }
 }
@@ -384,39 +386,52 @@ pub fn display_authority() {
 }
 
 pub fn display_timezones(query: &String) {
-  let timezones = include_str!("../data/tz.txt");
-  let mut writer = stdout_writer();
-  writer.write(format!("{}: {}", "Usage".underline(), "-t, --timezone <TIMEZONE>").as_bytes()).unwrap();
-  writer.write(b"\n").unwrap();
-  writer.write(b"\nThe below values can be used with the -t, --timezone <TIMEZONE> option.").unwrap();
-  if query == &String::new() {
-    writer.write(b"\nOptionally, use salah timezones [QUERY] to search for specific timezones.").unwrap();
+    let timezones = include_str!("../data/tz.txt");
+    let mut writer = stdout_writer();
+    writer
+        .write(format!("{}: {}", "Usage".underline(), "-t, --timezone <TIMEZONE>").as_bytes())
+        .unwrap();
     writer.write(b"\n").unwrap();
-    writer.write(format!("\n{}:", "Timezones".underline()).as_bytes()).unwrap();
-    for line in timezones.lines() {
-      if line != "\n" {
-        writer.write(format!("\n  {}", line).as_bytes()).unwrap();
-      }
-    }
-  } else {
-    writer.write(b"\n").unwrap();
-    writer.write(format!("\n{}: `{}`", "Query".underline(), query).as_bytes()).unwrap();
-    writer.write(b"\n").unwrap();
-    writer.write(format!("\n{}:", "Results".underline()).as_bytes()).unwrap();
-    
-    let space_separated: Vec<&str> = query.split(" ").collect();
-    let parsed_query = space_separated.join("_").to_lowercase();
-    let mut num_found = 0;
+    writer
+        .write(b"\nThe below values can be used with the -t, --timezone <TIMEZONE> option.")
+        .unwrap();
+    if query == &String::new() {
+        writer
+            .write(b"\nOptionally, use salah timezones [QUERY] to search for specific timezones.")
+            .unwrap();
+        writer.write(b"\n").unwrap();
+        writer
+            .write(format!("\n{}:", "Timezones".underline()).as_bytes())
+            .unwrap();
+        for line in timezones.lines() {
+            if line != "\n" {
+                writer.write(format!("\n  {}", line).as_bytes()).unwrap();
+            }
+        }
+    } else {
+        writer.write(b"\n").unwrap();
+        writer
+            .write(format!("\n{}: `{}`", "Query".underline(), query).as_bytes())
+            .unwrap();
+        writer.write(b"\n").unwrap();
+        writer
+            .write(format!("\n{}:", "Results".underline()).as_bytes())
+            .unwrap();
 
-    for line in timezones.lines() {
-      if line.to_lowercase().contains(parsed_query.as_str()) {
-        writer.write(format!("\n  {}", line).as_bytes()).unwrap();
-        num_found += 1;
-      }
-    }
-    writer.write(format!("\nFound {} result(s)", num_found).as_bytes()).unwrap();
-  }
-  writer.write(b"\n").unwrap();
-  writer.flush().unwrap();
+        let space_separated: Vec<&str> = query.split(" ").collect();
+        let parsed_query = space_separated.join("_").to_lowercase();
+        let mut num_found = 0;
 
+        for line in timezones.lines() {
+            if line.to_lowercase().contains(parsed_query.as_str()) {
+                writer.write(format!("\n  {}", line).as_bytes()).unwrap();
+                num_found += 1;
+            }
+        }
+        writer
+            .write(format!("\nFound {} result(s)", num_found).as_bytes())
+            .unwrap();
+    }
+    writer.write(b"\n").unwrap();
+    writer.flush().unwrap();
 }
