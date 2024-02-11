@@ -38,7 +38,7 @@ Options:
 ```
 salah location [OPTIONS] --city <CITY> --country <COUNTRY> [TIMINGS]...
 ```
-**`location` Parameters:**
+**Parameters:**
 | Parameter             | Description                           | 
 | :-------------------- | :------------------------------------ | 
 | `--city <CITY>`       | The city to calculate timings for.    |
