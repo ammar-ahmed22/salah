@@ -114,8 +114,50 @@ Authorities:
 ```
 
 #### Examples
-##### Getting all timings for Whitby, Canada
+##### Getting Fajr time for Toronto, Canada, formatted
+```
+salah location --city Toronto --country Canada --date 2024-02-11 --format "%I:%M %p" fajr
+```
+**Output:**
+```
+fajr 06:03 AM
+```
 
-##### Getting fardh timings for Karachi, Pakistan
+##### Getting fardh timings for Karachi, Pakistan, formatted
+```
+salah location --city Karachi --country Pakistan -t Asia/Karachi --format "%I:%M %p" --date 2024-02-11 fajr dhuhr asr maghrib isha
+```
 
-#### Getting Asr with Hanafi madhab for Whitby, Canada
+**Output:**
+```
+fajr 06:05 AM
+dhuhr 12:46 PM
+asr 03:59 PM
+maghrib 06:23 PM
+isha 07:27 PM
+```
+
+#### Getting Asr with Hanafi madhab for Toronto, Canada, formatted
+```
+salah location --city Toronto --country Canada --date 2024-02-11 --format "%I:%M %p" --hanafi asr
+```
+
+**Output:**
+```
+asr 03:57 PM
+```
+#### Getting all timings for Makkah, Saudi Arabia, formatted
+```
+salah location --city Makkah --country "Saudi Arabia" --date 2024-02-11 -t Asia/Riyadh --format "%I:%M %p" --auth Makkah --all
+```
+
+**Output:**
+```
+fajr 05:37 AM
+sunrise 06:54 AM
+dhuhr 12:35 PM
+asr 03:51 PM
+maghrib 06:16 PM
+isha 07:46 PM
+midnight 12:35 AM
+```

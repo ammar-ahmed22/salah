@@ -61,7 +61,7 @@ impl Authority {
             Self::MWL => IshaParam::Angle(17_f64),
             Self::ISNA => IshaParam::Angle(15_f64),
             Self::Egypt => IshaParam::Angle(17.5_f64),
-            Self::Makkah => IshaParam::Duration(std::time::Duration::from_secs(90 * 3600)),
+            Self::Makkah => IshaParam::Duration(std::time::Duration::from_secs(90 * 60)),
             Self::Karachi => IshaParam::Angle(18_f64),
             Self::Tehran => IshaParam::Angle(14_f64),
             Self::Jafari => IshaParam::Angle(14_f64),
