@@ -10,14 +10,9 @@ use salah::cli;
 /// https://data.iana.org/time-zones/tzdb-2024a/zone1970.tab -> timezone names
 /// https://nominatim.openstreetmap.org/search?city=Whitby&country=Canada&format=json -> lat,lng API
 
-fn main() -> Result<()> {
-    // CONSTANTS
-    // const TIMEZONE_NAME: &str = "America/Toronto";
-    // const LAT: f64 = 43.87982_f64;
-    // const LNG: f64 = -78.9421751_f64;
-
-    // Creating DateTime
-    let opts = cli::parse().with_context(|| "Failed to parse CLI arguments")?;
+#[tokio::main]
+async fn main() -> Result<()> {
+    let opts = cli::parse().await.with_context(|| "Failed to parse CLI arguments")?;
 
     match opts {
         cli::ParsedOptions::Calculation {
