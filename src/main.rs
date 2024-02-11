@@ -21,6 +21,7 @@ async fn main() -> Result<()> {
             timings,
             auth,
             school,
+            format,
         } => {
             let pt = times::PrayerTimes::new(lat, lng)
                 .with_date(&date)
@@ -29,7 +30,7 @@ async fn main() -> Result<()> {
                 .with_school(&school);
             
             for timing in &timings {
-                println!("{} {}", timing.to_str(), pt.timing(timing).format("%I:%M %p"));
+                println!("{} {}", timing.to_str(), pt.timing(timing).format(format.as_str()));
             }
         }
         cli::ParsedOptions::Timings => cli::display_timings(),

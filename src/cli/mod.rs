@@ -92,7 +92,11 @@ pub struct CommonConfig {
     /// Calculation authority to use (see `salah authority` for available values)
     #[arg(long, default_value_t=String::from("ISNA"))]
     auth: String,
-}
+
+    /// Format string for timings output. See `man strftime` for configuration.
+    #[arg(long, default_value_t=String::from("%H:%M:%S"))]
+    format: String,
+} 
 
 impl CommonConfig {
     fn parsed_date(&self) -> Result<NaiveDate> {
@@ -146,6 +150,7 @@ pub enum ParsedOptions {
         timings: Vec<types::Timing>,
         auth: types::Authority,
         school: types::School,
+        format: String
     },
     Timings,
     Authority,
@@ -178,6 +183,7 @@ pub async fn parse() -> Result<ParsedOptions> {
             } else {
                 types::School::Shafi
             };
+            let format = common.format.to_owned();
 
             // API call to get lat,lng from city, country
             #[derive(Deserialize)]
@@ -221,6 +227,7 @@ pub async fn parse() -> Result<ParsedOptions> {
                 timings,
                 auth,
                 school,
+                format,
             });
         }
         Commands::Coord { common, lat, lng } => {
@@ -241,6 +248,7 @@ pub async fn parse() -> Result<ParsedOptions> {
             } else {
                 types::School::Shafi
             };
+            let format = common.format.to_owned();
             return Ok(ParsedOptions::Calculation {
                 date,
                 timezone,
@@ -249,6 +257,7 @@ pub async fn parse() -> Result<ParsedOptions> {
                 timings,
                 auth,
                 school,
+                format,
             });
         }
         Commands::Timings => {
