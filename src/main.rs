@@ -12,7 +12,9 @@ use salah::cli;
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    let opts = cli::parse().await.with_context(|| "Failed to parse CLI arguments")?;
+    let opts = cli::parse()
+        .await
+        .with_context(|| "Failed to parse CLI arguments")?;
 
     match opts {
         cli::ParsedOptions::Calculation {

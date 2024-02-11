@@ -3,13 +3,13 @@ use chrono::NaiveDate;
 use chrono_tz::Tz;
 use clap::{ArgAction, Parser, Subcommand};
 use colored::*;
-use std::io::Write;
+use reqwest::header::{HeaderMap, HeaderValue, USER_AGENT};
 use serde::Deserialize;
-use reqwest::header::{ HeaderMap, HeaderValue, USER_AGENT };
+use std::io::Write;
 
+use crate::api;
 use crate::datetime;
 use crate::times::types;
-use crate::api;
 
 pub const ALLOWED_TIMES: [&'static str; 8] = [
     "fajr", "sunrise", "dhuhr", "asr", "maghrib", "isha", "midnight", "fardh",
@@ -182,25 +182,37 @@ pub async fn parse() -> Result<ParsedOptions> {
             // API call to get lat,lng from city, country
             #[derive(Deserialize)]
             struct APICoord {
-              lat: String,
-              lon: String
+                lat: String,
+                lon: String,
             }
-            let url = format!("https://nominatim.openstreetmap.org/search?city={}&country={}&format=jsonv2", city, country);
+            let url = format!(
+                "https://nominatim.openstreetmap.org/search?city={}&country={}&format=jsonv2",
+                city, country
+            );
             let mut headers = HeaderMap::new();
             headers.insert(USER_AGENT, HeaderValue::from_static("salah-cli"));
             let coords: Vec<APICoord> = api::fetch::<Vec<APICoord>>(url.as_str(), headers)
-              .await
-              .with_context(|| format!("Could not get coordinates with city = `{}` and country = `{}`", city, country))?;
+                .await
+                .with_context(|| {
+                    format!(
+                        "Could not get coordinates with city = `{}` and country = `{}`",
+                        city, country
+                    )
+                })?;
 
             if coords.len() < 1 {
-              return Err(anyhow::anyhow!("Could not find lat, lng from city = `{}` and country = `{}`. Please check spelling!", city, country));
+                return Err(anyhow::anyhow!("Could not find lat, lng from city = `{}` and country = `{}`. Please check spelling!", city, country));
             }
 
-            let lat = coords[0].lat.parse::<f64>()
-              .with_context(|| format!("Could not convert `lat` = `{}` to f64", coords[0].lat))?;
-            let lng = coords[0].lon.parse::<f64>()
-              .with_context(|| format!("Could not convert `lng` = `{}` to f64", coords[0].lon))?;
-          
+            let lat = coords[0]
+                .lat
+                .parse::<f64>()
+                .with_context(|| format!("Could not convert `lat` = `{}` to f64", coords[0].lat))?;
+            let lng = coords[0]
+                .lon
+                .parse::<f64>()
+                .with_context(|| format!("Could not convert `lng` = `{}` to f64", coords[0].lon))?;
+
             return Ok(ParsedOptions::Calculation {
                 date,
                 timezone,
