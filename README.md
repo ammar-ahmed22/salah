@@ -118,7 +118,7 @@ Authorities:
 ```
 salah location --city Toronto --country Canada --date 2024-02-11 --format "%I:%M %p" fajr
 ```
-**Output:**
+#### Output:
 ```
 fajr 06:03 AM
 ```
@@ -128,7 +128,7 @@ fajr 06:03 AM
 salah location --city Karachi --country Pakistan -t Asia/Karachi --format "%I:%M %p" --date 2024-02-11 fajr dhuhr asr maghrib isha
 ```
 
-**Output:**
+#### Output:
 ```
 fajr 06:05 AM
 dhuhr 12:46 PM
@@ -142,7 +142,7 @@ isha 07:27 PM
 salah location --city Toronto --country Canada --date 2024-02-11 --format "%I:%M %p" --hanafi asr
 ```
 
-**Output:**
+#### Output:
 ```
 asr 03:57 PM
 ```
@@ -151,7 +151,7 @@ asr 03:57 PM
 salah location --city Makkah --country "Saudi Arabia" --date 2024-02-11 -t Asia/Riyadh --format "%I:%M %p" --auth Makkah --all
 ```
 
-**Output:**
+#### Output:
 ```
 fajr 05:37 AM
 sunrise 06:54 AM
