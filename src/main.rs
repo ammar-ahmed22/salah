@@ -35,6 +35,9 @@ async fn main() -> Result<()> {
         }
         cli::ParsedOptions::Timings => cli::display_timings(),
         cli::ParsedOptions::Authority => cli::display_authority(),
+        cli::ParsedOptions::Timezones { query } => {
+            cli::display_timezones(&query);
+        }
     }
 
     return Ok(());
