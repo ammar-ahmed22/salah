@@ -41,7 +41,7 @@ salah location [OPTIONS] --city <CITY> --country <COUNTRY> [TIMINGS]...
 **Options:**
 | Option          | Description                        | Default | Required   |
 | :-------------- | :--------------------------------- | :------ | :--------- |
-| `--city <CITY>` | The city to calculate timings for. | None    | - [ X ]    |
+| `--city <CITY>` | The city to calculate timings for. | None    | - [x]      |
 
 ##### `salah coord`
 
