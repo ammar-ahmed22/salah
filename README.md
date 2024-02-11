@@ -113,22 +113,22 @@ Authorities:
   Jafari    Fajr at 16 degrees, Isha at 14 degrees. - Shia Ithna Ashari, Leva Research Institute, Qum
 ```
 
-#### Examples
-##### Getting Fajr time for Toronto, Canada, formatted
+### 🚧 Examples
+#### Getting Fajr time for Toronto, Canada, formatted
 ```
 salah location --city Toronto --country Canada --date 2024-02-11 --format "%I:%M %p" fajr
 ```
-#### Output:
+##### Output:
 ```
 fajr 06:03 AM
 ```
 
-##### Getting fardh timings for Karachi, Pakistan, formatted
+#### Getting fardh timings for Karachi, Pakistan, formatted
 ```
 salah location --city Karachi --country Pakistan -t Asia/Karachi --format "%I:%M %p" --date 2024-02-11 fajr dhuhr asr maghrib isha
 ```
 
-#### Output:
+##### Output:
 ```
 fajr 06:05 AM
 dhuhr 12:46 PM
@@ -142,7 +142,7 @@ isha 07:27 PM
 salah location --city Toronto --country Canada --date 2024-02-11 --format "%I:%M %p" --hanafi asr
 ```
 
-#### Output:
+##### Output:
 ```
 asr 03:57 PM
 ```
@@ -151,7 +151,7 @@ asr 03:57 PM
 salah location --city Makkah --country "Saudi Arabia" --date 2024-02-11 -t Asia/Riyadh --format "%I:%M %p" --auth Makkah --all
 ```
 
-#### Output:
+##### Output:
 ```
 fajr 05:37 AM
 sunrise 06:54 AM
@@ -161,3 +161,9 @@ maghrib 06:16 PM
 isha 07:46 PM
 midnight 12:35 AM
 ```
+
+### 🤝 Contributing
+Contributions are welcome! I'm very new to Rust (this is my first project lol), so I'm sure there is a lot to improve on. Feel free to open a PR or create an issue!
+
+### 📄 License
+[MIT](./LICENSE)
