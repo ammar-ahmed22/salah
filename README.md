@@ -4,6 +4,15 @@
   <p>Rust-based command-line tool that efficiently calculates Islamic prayer times without external API calls, perfect for integrating accurate prayer schedules into servers and Islamic applications.</p>
 </div>
 
+### Contents
+- [✨ Features](#✨-features)
+- [👨🏾‍💻 Installation](#👨🏾‍💻-installation)
+- [🤸🏾‍♂️ Usage](#🤸🏾‍♂️-usage)
+  + [Commands](#commands)
+- [🚧 Examples](#🚧-examples)
+- [🤝 Contributing](#🤝-contributing)
+- [📄 License](#📄-license)
+
 ### ✨ Features
 - **Location Specific:** Calculate all the relevant Islamic prayer times based on specified locations.
 - **Timezone Specific:** Output times based on defined timezones.
