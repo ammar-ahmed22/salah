@@ -61,16 +61,16 @@ Calculates timings directly without any need for external API calls.
 
 #### `[OPTIONS]`
 These options are the same for both `salah location` and `salah coord`
-| Option                      | Description                                                                                                   | Format                  | Default           |
-| :-------------------------- | :------------------------------------------------------------------------------------------------------------ | :---------------------- | :---------------- |
-| `-d, --date <DATE>`         | Date to calculate the timings for. `today` for today's date according to the set timezone.                    | `YYYY-MM-DD` or `today` | `today`           |
-| `-t, --timezone <TIMEZONE>` | Timezone to output the timings for. All timezones under IATA are available.                                   | `Continent/Region`      | `America/Toronto` |
-| `-a, -all`                  | Calculates all the availabe prayer timings. Overrides any values in `[TIMINGS]...`                            | N/A                     | `false`           |
-| `--hanafi`                  | Calculates Asr time using the Hanafi madhab                                                                   | N/A                     | `false`           |
-| `--auth <AUTH>`             | Calculation authority to use. Relevant for Fajr and Isha times. (use `salah authority`) for available values. | per `salah authority`   | `ISNA`            |
-| `--format <FORMAT>`         | Format string to use for the timings output. Follows `strftime` from C language.                              | per `strftime`          | `%H:%M:%S`        |
-| `-h, --help`                | Print help                                                                                                    | N/A                     | `false`           |
-                                    
+| Option                            | Description                                                                                                   | Format                  | Default           |
+| :-------------------------------- | :------------------------------------------------------------------------------------------------------------ | :---------------------- | :---------------- |
+| `-d` <br/>`--date <DATE>`         | Date to calculate the timings for. `today` for today's date according to the set timezone.                    | `YYYY-MM-DD` or `today` | `today`           |
+| `-t` <br/>`--timezone <TIMEZONE>` | Timezone to output the timings for. All timezones under IATA are available.                                   | `Continent/Region`      | `America/Toronto` |
+| `-a` <br/>`-all`                  | Calculates all the availabe prayer timings. Overrides any values in `[TIMINGS]...`                            | N/A                     | `false`           |
+| `--hanafi`                        | Calculates Asr time using the Hanafi madhab                                                                   | N/A                     | `false`           |
+| `--auth <AUTH>`                   | Calculation authority to use. Relevant for Fajr and Isha times. (use `salah authority`) for available values. | per `salah authority`   | `ISNA`            |
+| `--format <FORMAT>`               | Format string to use for the timings output. Follows `strftime` from C language.                              | per `strftime`          | `%H:%M:%S`        |
+| `-h, --help`                      | Print help                                                                                                    | N/A                     | `false`           |
+
 #### `salah timings`
 Lists all available values for `[TIMINGS]...`
 ```
