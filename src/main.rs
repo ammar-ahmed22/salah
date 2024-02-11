@@ -1,10 +1,6 @@
 use anyhow::{Context, Result};
-// use chrono::{ NaiveDate, NaiveDateTime, TimeZone, Utc };
-// use colored::*;
-// use chrono_tz::Tz;
-// use salah::times::PrayerTimes;
-// use clap::Parser;
 use salah::cli;
+use salah::times;
 
 /// USEFUL LINKS:
 /// https://data.iana.org/time-zones/tzdb-2024a/zone1970.tab -> timezone names
@@ -26,12 +22,15 @@ async fn main() -> Result<()> {
             auth,
             school,
         } => {
-            println!("date = {:?}", date);
-            println!("timezone = {:?}", timezone);
-            println!("lat = {:?}, lng = {:?}", lat, lng);
-            println!("timings = {:?}", timings);
-            println!("auth = {:?}", auth);
-            println!("school = {:?}", school);
+            let pt = times::PrayerTimes::new(lat, lng)
+                .with_date(&date)
+                .with_timezone(&timezone)
+                .with_authority(&auth)
+                .with_school(&school);
+            
+            for timing in &timings {
+                println!("{} {}", timing.to_str(), pt.timing(timing).format("%I:%M %p"));
+            }
         }
         cli::ParsedOptions::Timings => cli::display_timings(),
         cli::ParsedOptions::Authority => cli::display_authority(),

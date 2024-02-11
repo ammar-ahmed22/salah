@@ -1,4 +1,4 @@
-#[derive(Debug)]
+#[derive(Debug, Copy, Clone)]
 pub enum School {
     Hanafi,
     Shafi,
@@ -13,7 +13,7 @@ impl School {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Copy, Clone)]
 pub enum Authority {
     MWL,
     ISNA,

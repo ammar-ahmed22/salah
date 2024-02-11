@@ -73,21 +73,21 @@ impl PrayerTimes {
     }
 
     /// Sets the timezone
-    pub fn with_timezone(mut self, tz: Tz) -> Self {
-        self.tz = tz;
-        self.tz_offset = datetime::tz_offset(tz);
+    pub fn with_timezone(mut self, tz: &Tz) -> Self {
+        self.tz = *tz;
+        self.tz_offset = datetime::tz_offset(*tz);
         return self;
     }
 
     /// Sets the calculation authority
-    pub fn with_authority(mut self, auth: Authority) -> Self {
-        self.auth = auth;
+    pub fn with_authority(mut self, auth: &Authority) -> Self {
+        self.auth = *auth;
         return self;
     }
 
     /// Sets the school of thought
-    pub fn with_school(mut self, school: School) -> Self {
-        self.school = school;
+    pub fn with_school(mut self, school: &School) -> Self {
+        self.school = *school;
         return self;
     }
 
@@ -184,8 +184,8 @@ impl PrayerTimes {
         return datetime::hour2time(mid, true).expect("RangeError @ PrayerTime.midnight");
     }
 
-    pub fn time(&self, time: Timing) -> NaiveTime {
-        match time {
+    pub fn timing(&self, timing: &Timing) -> NaiveTime {
+        match timing {
             Timing::Fajr => self.fajr(),
             Timing::Sunrise => self.sunrise(),
             Timing::Dhuhr => self.dhuhr(),
