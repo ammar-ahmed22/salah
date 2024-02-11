@@ -38,10 +38,13 @@ Options:
 ```
 salah location [OPTIONS] --city <CITY> --country <COUNTRY> [TIMINGS]...
 ```
-**Options:**
-| Option          | Description                        | Default | Required   |
-| :-------------- | :--------------------------------- | :------ | :--------- |
-| `--city <CITY>` | The city to calculate timings for. | None    | - [x]      |
+**`location` Parameters:**
+| Parameter             | Description                           | 
+| :-------------------- | :------------------------------------ | 
+| `--city <CITY>`       | The city to calculate timings for.    |
+| `--country <COUNTRY>` | The country to calculate timings for. |
+
+Uses the [Nominatim OpenStreetMaps API](https://google.ca) to get latitude/longitude values required for calculating prayer times.
 
 ##### `salah coord`
 
