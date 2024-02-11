@@ -1,4 +1,4 @@
-use chrono::{ DateTime, TimeZone, Offset, NaiveTime, Utc, Timelike };
+use chrono::{ DateTime, TimeZone, Offset, NaiveTime, Utc, Timelike, NaiveDate };
 use anyhow::{Context, Result};
 use chrono_tz::Tz;
 
@@ -90,3 +90,47 @@ pub fn time2hour(time: NaiveTime) -> f64 {
 
   return hour + decimal;
 } 
+
+/// Converts a string to a NaiveDate
+/// 
+/// ### Arguments
+/// * `date` - A date in the form YYYY-MM-DD OR `today`
+/// * `timezone` - A chrono_tz timezone for creating the date if `today` is passed
+pub fn str2date(date: &String, timezone: Tz) -> Result<NaiveDate> {
+  if date == &String::from("today") {
+    let today = timezone.from_utc_datetime(&Utc::now().naive_utc()).date_naive();
+    return Ok(today);
+  }
+
+  let parts: Vec<&str> = date.split('-').collect();
+  if parts.len() != 3 {
+    return Err(anyhow::anyhow!("date must consist of 3 '-' separated parts!"))
+  }
+
+  let year = match parts[0].parse::<i32>() {
+    Ok(v) => v,
+    Err(e) => {
+      return Err(anyhow::anyhow!(format!("Failed to parse year = `{}` ({}).", parts[0], e)))
+    }
+  };
+
+  let month = match parts[1].parse::<u32>() {
+    Ok(v) => v,
+    Err(e) => {
+      return Err(anyhow::anyhow!(format!("Failed to parse month = `{}` ({}).", parts[1], e)))
+    }
+  };
+
+  let day = match parts[2].parse::<u32>() {
+    Ok(v) => v,
+    Err(e) => {
+      return Err(anyhow::anyhow!(format!("Failed to parse day = `{}` ({}).", parts[2], e)))
+    }
+  };
+
+  let naive = NaiveDate::from_ymd_opt(year, month, day);
+  match naive {
+    None => Err(anyhow::anyhow!("Date: [year = {}, month = {}, day = {}] is out of range!", year, month, day)),
+    Some(d) => Ok(d) 
+  }
+}

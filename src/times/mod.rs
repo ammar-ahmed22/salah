@@ -4,74 +4,9 @@ use crate::astro;
 use crate::datetime;
 use crate::math;
 
-pub enum School {
-  Hanafi,
-  Shafi
-}
+pub mod types;
 
-impl School {
-  fn shadow_length(&self) -> f64 {
-    match self {
-      Self::Hanafi => 2_f64,
-      Self::Shafi => 1_f64
-    }
-  }
-}
-
-pub enum Authority {
-  MWL,
-  ISNA,
-  Egypt,
-  Makkah,
-  Karachi,
-  Tehran,
-  Jafari
-}
-
-pub enum IshaParam {
-  Angle(f64),
-  Duration(std::time::Duration)
-}
-
-impl Authority {
-  fn fajr_angle(&self) -> f64 {
-    match self {
-      Self::MWL => 18_f64,
-      Self::ISNA => 15_f64,
-      Self::Egypt => 19.5_f64,
-      Self::Makkah => 18.5_f64,
-      Self::Karachi => 18_f64,
-      Self::Tehran => 17.7_f64,
-      Self::Jafari => 16_f64
-    }
-  }
-
-  fn isha_param(&self) -> IshaParam {
-    match self {
-      Self::MWL => IshaParam::Angle(17_f64),
-      Self::ISNA => IshaParam::Angle(15_f64),
-      Self::Egypt => IshaParam::Angle(17.5_f64),
-      Self::Makkah => IshaParam::Duration(std::time::Duration::from_secs(90 * 3600)),
-      Self::Karachi => IshaParam::Angle(18_f64),
-      Self::Tehran => IshaParam::Angle(14_f64),
-      Self::Jafari => IshaParam::Angle(14_f64)
-    }
-  }
-
-  // TODO Use this for choosing in the CLI
-  #[allow(dead_code)]
-  fn name(&self) -> &str {
-    match self {
-      Self::MWL => "Muslim World League",
-      Self::ISNA => "Islamic Society of North America",
-      Self::Egypt => "Egyptian General Authority of Survey",
-      Self::Makkah => "Umm al-Qura University, Makkah",
-      Self::Karachi => "University of Islamic Sciences, Karachi",
-      Self::Tehran => "Institute of Geophysics, University of Tehran",
-      Self::Jafari => "Shia Ithna Ashari, Leva Research Institute, Qum"
-    }
-  }
-}
+use types::{ Authority, School, IshaParam, Timing };
 
 pub struct PrayerTimes {
   /// timezone
@@ -218,6 +153,18 @@ impl PrayerTimes {
 
     let mid = sunset + math::time::normalize_hour(sunrise - sunset) / 2_f64;
     return datetime::hour2time(mid, true).expect("RangeError @ PrayerTime.midnight");
+  }
+
+  pub fn time(&self, time: Timing) -> NaiveTime {
+    match time {
+      Timing::Fajr => self.fajr(),
+      Timing::Sunrise => self.sunrise(),
+      Timing::Dhuhr => self.dhuhr(),
+      Timing::Asr => self.asr(),
+      Timing::Maghrib => self.maghrib(),
+      Timing::Isha => self.isha(),
+      Timing::Midnight => self.midnight()
+    }
   }
 
 }
