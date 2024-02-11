@@ -113,6 +113,25 @@ Authorities:
   Jafari    Fajr at 16 degrees, Isha at 14 degrees. - Shia Ithna Ashari, Leva Research Institute, Qum
 ```
 
+#### `salah timezones`
+Lists all the available timezones with optional query parameter to search for specific timezones.
+```
+salah timezones [QUERY]
+```
+
+##### Example: `salah timezones Toronto`
+```
+Usage: -t, --timezone <TIMEZONE>
+
+The below values can be used with the -t, --timezone <TIMEZONE> option.
+
+Query: `Toronto`
+
+Results:
+  America/Toronto
+Found 1 result(s)
+```
+
 ### 🚧 Examples
 #### Getting Fajr time for Toronto, Canada, formatted
 ```
